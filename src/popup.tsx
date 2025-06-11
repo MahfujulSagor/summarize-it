@@ -2,10 +2,13 @@ import { CheckCheck, Copy, Sun } from "lucide-react"
 
 import "./style.css"
 
+// import remarkGfm from "remark-gfm"
+import { GoogleGenAI } from "@google/genai"
 import React, { useEffect, useState } from "react"
-import Markdown from "react-markdown"
+// import Markdown from "react-markdown"
 import { GridLoader } from "react-spinners"
-import remarkGfm from "remark-gfm"
+
+const ai = new GoogleGenAI({ apiKey: process.env.PLASMO_PUBLIC_GEMINI_API_KEY })
 
 function IndexPopup() {
   const [clicked, setClicked] = useState(false)
@@ -33,29 +36,39 @@ function IndexPopup() {
     try {
       const pageText = await getPageText()
 
-      const response = await fetch(
-        "https://openrouter.ai/api/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.PLASMO_PUBLIC_AI_API_KEY!}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            model: "deepseek/deepseek-r1-0528:free",
-            messages: [
-              {
-                role: "user",
-                content: `Summarize the following content with detail and organize it in sections or bulletpoints:\n\n ${pageText}`
-              }
-            ]
-          })
-        }
-      )
-      const data = await response.json()
-      const summed =
-        (await data.choices?.[0]?.message?.content) || "No summary generated."
-      setSummary(summed)
+      // const response = await fetch(
+      //   "https://openrouter.ai/api/v1/chat/completions",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       Authorization: `Bearer ${process.env.PLASMO_PUBLIC_AI_API_KEY!}`,
+      //       "Content-Type": "application/json"
+      //     },
+      //     body: JSON.stringify({
+      //       model: "deepseek/deepseek-r1-0528:free",
+      //       messages: [
+      //         {
+      //           role: "user",
+      //           content: `Summarize the following content with detail and organize it in sections or bulletpoints:\n\n ${pageText}`
+      //         }
+      //       ]
+      //     })
+      //   }
+      // )
+      // const data = await response.json()
+      // const summed =
+      //   (await data.choices?.[0]?.message?.content) || "No summary generated."
+      // setSummary(summed)
+
+      const response = await ai.models.generateContentStream({
+        model: "gemini-2.0-flash",
+        contents: `Summarize the following content with details and organize it using bulletpoints and sections. Dont say anything else. ${pageText}`
+      })
+
+      for await (const chunk of response) {
+        const text = chunk.text
+        setSummary((prev) => prev + text)
+      }
     } catch (error) {
       console.error(error)
       setSummary("⚠️ An error occurred while summarizing. Please try again.")
@@ -100,7 +113,11 @@ function IndexPopup() {
             </div>
           </div>
           <div className="py-4 markdown-body ">
-            <Markdown remarkPlugins={[remarkGfm]}>{summary}</Markdown>
+            {/* <Markdown */}
+            {/* remarkPlugins={[remarkGfm]} */}
+            {/* > */}
+            {summary}
+            {/* </Markdown> */}
           </div>
         </div>
       ) : (
