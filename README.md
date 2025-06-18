@@ -42,3 +42,7 @@
 3. Instantly get a clean, AI-generated summary
 
 ---
+
+## 📜 License
+
+MIT License © [Mahfujul Sagor](https://github.com/MahfujulSagor)
