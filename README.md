@@ -1,33 +1,48 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# Summarize It 🧠✨
 
-## Getting Started
+**Summarize It** is a Chrome extension designed to make reading long articles faster and easier. With one click, it uses AI to generate concise summaries of online content — saving you time without missing the essence.
 
-First, run the development server:
+---
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
+## 🚀 Features
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+- 📚 Summarize long articles with a single click
+- 🤖 AI-powered text analysis
+- ⚡ Minimal UI, blazing fast output
+- 🌐 Works on most news and blog sites
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+---
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
+## 🔧 Installation
 
-## Making production build
+1. Clone this repository or [download as ZIP](https://github.com/MahfujulSagor/summarize-it/archive/refs/heads/main.zip)
+2. Go to `chrome://extensions/` in your Chrome browser
+3. Enable **Developer mode** (top-right)
+4. Click **Load unpacked** and select the project directory
+5. Pin the extension for quick access
 
-Run the following:
+---
 
-```bash
-pnpm build
-# or
-npm run build
-```
+## 🛠 Tech Stack
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
+- [Plasmo Framework](https://docs.plasmo.com/) for Chrome Extension development
+- TypeScript
+- TailwindCSS for UI styling
+- Chrome Extensions API (Manifest V3)
+- AI backend:
+  - [OpenRouter](https://openrouter.ai/) for centralized model routing
+  - Planned support for user-provided OpenRouter API keys
 
-## Submit to the webstores
+---
 
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+## ⚙️ Usage
+
+1. Open a long article or blog post
+2. Click the **Summarize It** icon in the toolbar
+3. Instantly get a clean, AI-generated summary
+
+---
+
+## 📜 License
+
+MIT License © [Mahfujul Sagor](https://github.com/MahfujulSagor)
