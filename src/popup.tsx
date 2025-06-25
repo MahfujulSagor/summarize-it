@@ -2,17 +2,15 @@ import { CheckCheck, Copy, Sun } from "lucide-react"
 
 import "./style.css"
 
-// import remarkGfm from "remark-gfm"
 import { GoogleGenAI } from "@google/genai"
-import React, { useEffect, useState } from "react"
-// import Markdown from "react-markdown"
+import React, { useState } from "react"
 import { GridLoader } from "react-spinners"
 
 const ai = new GoogleGenAI({ apiKey: process.env.PLASMO_PUBLIC_GEMINI_API_KEY })
 
 function IndexPopup() {
   const [clicked, setClicked] = useState(false)
-  const [summary, setSummary] = useState("")
+  const [summary, setSummary] = useState("Hello")
   const [loading, setLoading] = useState(false)
 
   const getPageText = async () => {
@@ -42,7 +40,7 @@ function IndexPopup() {
         return
       }
 
-      const res = await fetch(`${process.env.PLASMO_PUBLIC_BASE_URL}/api/v1/summarize`, {
+      const res = await fetch(`${process.env.PLASMO_PUBLIC_API}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -88,7 +86,9 @@ function IndexPopup() {
         <div className=" flex flex-col gap-4 my-10 text-lg px-2 overflow-hidden min-h-[350px]">
           <div className="flex justify-between items-center">
             <div className="text-xl font-semibold text-black">Summary</div>
-            <div className="flex justify-end items-center" onClick={handleCopy}>
+            <div
+              className="flex justify-end items-center"
+              onClick={handleCopy}>
               {clicked ? (
                 <CheckCheck className="cursor-pointer text-teal-600" />
               ) : (
@@ -97,11 +97,7 @@ function IndexPopup() {
             </div>
           </div>
           <div className="py-4 markdown-body ">
-            {/* <Markdown */}
-            {/* remarkPlugins={[remarkGfm]} */}
-            {/* > */}
             {summary}
-            {/* </Markdown> */}
           </div>
         </div>
       ) : (
